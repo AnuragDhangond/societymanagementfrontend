@@ -1,0 +1,30 @@
+<nav class="navbar navbar-light bg-primary">
+  <div class="container-fluid">
+    <h2 class="text-white mb-0">
+      Sai Balaji Society Member Record App
+    </h2>
+
+    <div class="d-flex">
+
+      <!-- MEMBERS PAGE BUTTON -->
+      <button
+        *ngIf="isMembersPage()"
+        class="btn btn-success me-2"
+        (click)="triggerAddMember()">
+        Add Society Member
+      </button>
+
+      <!-- MAINTENANCE PAGE BUTTON (NO LOGIC YET) -->
+      <button
+        *ngIf="isMaintenancePage()"
+        class="btn btn-warning me-2">
+        Add Maintenance
+      </button>
+
+      <button class="btn btn-danger" routerLink="/login">
+        Logout
+      </button>
+
+    </div>
+  </div>
+</nav>

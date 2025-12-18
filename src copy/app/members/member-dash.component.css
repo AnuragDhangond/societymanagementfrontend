@@ -1,0 +1,36 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;   /* 🔑 MOST IMPORTANT LINE */
+}
+
+/* Sticky navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+}
+
+/* Fixed white space below navbar */
+.table-wrapper {
+  padding-top: 20px; /* white space that should NOT scroll */
+}
+
+/* Scroll starts ONLY here */
+.table-container {
+  height: calc(100vh - 70px - 20px);
+  overflow-y: auto;
+}
+
+/* Sticky table header */
+.table thead th {
+  position: sticky;
+  top: 0;
+
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: inset 0 -1px 0 #515151;
+
+  z-index: 5;
+}

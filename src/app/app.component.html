@@ -1,0 +1,29 @@
+<!-- LOGIN / SIGNUP (NO LAYOUT) -->
+<div *ngIf="isAuthPage(); else mainLayout">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- AFTER LOGIN -->
+<ng-template #mainLayout>
+
+  <div class="app-layout">
+    
+    <!-- SIDEBAR -->
+    <app-sidebar></app-sidebar>
+
+    <!-- RIGHT SIDE (NAVBAR + CONTENT) -->
+    <div class="right-content">
+      
+      <!-- NAVBAR -->
+      <app-navbar></app-navbar>
+
+      <!-- PAGE CONTENT -->
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+
+  </div>
+
+</ng-template>

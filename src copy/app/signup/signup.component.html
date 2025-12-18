@@ -1,0 +1,41 @@
+<div class="signup-wrapper">
+
+  <div class="card p-4">
+
+    <div class="text-center mb-3">
+      <h1>Sai Balaji Society Admin Portal Sign Up</h1>
+      <h5>You can sign up here!</h5>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+
+      <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <input formControlName="email" type="email" class="form-control" placeholder="Email address">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input formControlName="name" type="text" class="form-control" placeholder="Admin Name">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <input formControlName="mobile" type="number" class="form-control" placeholder="Phone">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input formControlName="password" type="password" class="form-control" placeholder="Password">
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+    </form>
+
+    <div class="mt-3 text-center">
+      <a routerLink="/login">Already User? Click to Login</a>
+    </div>
+
+  </div>
+
+</div>

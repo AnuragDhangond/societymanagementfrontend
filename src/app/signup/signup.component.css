@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* FULL SCREEN CENTER */
+.signup-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #0d6efd, #6f42c1);
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 40px;
+  border-radius: 12px;
+
+  background-color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
