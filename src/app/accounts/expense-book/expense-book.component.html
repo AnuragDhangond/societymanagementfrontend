@@ -1,0 +1,60 @@
+<div class="account-book-container">
+
+  <div class="header">
+  <h2>Expense Book (Account Ledger)</h2>
+
+  <div class="actions">
+    <!-- Year Filter -->
+    <select [(ngModel)]="selectedYear" (change)="applyFilters()" class="filter">
+      <option value="">All Years</option>
+      <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+    </select>
+
+    <!-- Month Filter -->
+    <select [(ngModel)]="selectedMonth" (change)="applyFilters()" class="filter">
+      <option value="">All Months</option>
+      <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+    </select>
+
+    <button class="pdf-btn" (click)="downloadPDF()">Download PDF</button>
+  </div>
+</div>
+
+  <!-- Summary Card -->
+  <div class="summary-card">
+    <p>Total Expenses</p>
+    <h3>₹ {{ totalExpense | number }}</h3>
+  </div>
+
+  <!-- Ledger Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Debit (₹)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exp of filteredExpenses">
+          <td>{{ exp.date | date:'dd-MM-yyyy' }}</td>
+          <td>{{ exp.title }}</td>
+          <td>{{ exp.category }}</td>
+          <td>{{ exp.description }}</td>
+          <td class="debit">₹ {{ exp.amount | number }}</td>
+        </tr>
+
+        <!-- Total Row -->
+        <tr class="total-row">
+          <td colspan="4"><strong>Total</strong></td>
+          <td class="debit"><strong>₹ {{ totalExpense | number }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

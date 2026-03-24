@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 import { MaintenanceRoutingModule } from './maintenance-routing.module';
 import { MaintenanceComponent } from './maintenance.component';
@@ -11,6 +13,7 @@ import { MaintenanceComponent } from './maintenance.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MaintenanceRoutingModule
   ]
 })

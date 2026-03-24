@@ -1,0 +1,62 @@
+<div class="account-book-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>Ledger Book (Income & Expenses)</h2>
+
+    <div class="actions">
+      <!-- Year Filter -->
+      <select [(ngModel)]="selectedYear" (change)="applyFilters()" class="filter">
+        <option value="">All Years</option>
+        <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+      </select>
+
+      <!-- Month Filter -->
+      <select [(ngModel)]="selectedMonth" (change)="applyFilters()" class="filter">
+        <option value="">All Months</option>
+        <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+      </select>
+
+      <!-- PDF -->
+      <button class="pdf-btn" (click)="downloadLedgerPDF()">
+        Download Ledger PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- BALANCE CARD -->
+  <div class="summary-card">
+    <p>Current Running Balance</p>
+    <h3>₹ {{ runningBalance | number }}</h3>
+  </div>
+
+  <!-- LEDGER TABLE -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Particulars</th>
+          <th>Credit (₹)</th>
+          <th>Debit (₹)</th>
+          <th>Balance (₹)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let entry of filteredEntries">
+          <td>{{ entry.date | date:'dd-MM-yyyy' }}</td>
+          <td>{{ entry.particulars }}</td>
+          <td class="credit">
+            {{ entry.credit ? (entry.credit | number) : '-' }}
+          </td>
+          <td class="debit">
+            {{ entry.debit ? (entry.debit | number) : '-' }}
+          </td>
+          <td class="balance">₹ {{ entry.balance | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

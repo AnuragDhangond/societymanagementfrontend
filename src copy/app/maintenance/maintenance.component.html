@@ -1,1 +1,251 @@
-<p>maintenance works!</p>
+<div class="maintenance-wrapper">
+
+  <!-- HEADER -->
+  <div class="maintenance-header">
+    <h2>Maintenance Dashboard</h2>
+
+    <button
+      *ngIf="isAdmin"
+      class="btn btn-primary"
+      (click)="toggleForm()">
+      + Add Maintenance
+    </button>
+  </div>
+
+  <!-- ADD MAINTENANCE FORM (ADMIN) -->
+  <div class="add-form" *ngIf="showAddForm && isAdmin">
+
+    <div class="form-row">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Flat Number"
+        [(ngModel)]="form.flat"
+        [disabled]="isEditMode"/>
+
+      <select class="form-control"
+              [(ngModel)]="form.wing"
+              [disabled]="isEditMode">
+        <option value="">Select Wing</option>
+        <option *ngFor="let w of wings" [value]="w">{{ w }}</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <select class="form-control"
+              [(ngModel)]="form.month"
+              [disabled]="isEditMode">
+        <option value="">Select Month</option>
+        <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+      </select>
+
+      <select class="form-control"
+              [(ngModel)]="form.year"
+              [disabled]="isEditMode">
+        <option value="">Select Year</option>
+        <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+      </select>
+    </div>
+
+    <input type="number"
+           class="form-control"
+           placeholder="Amount"
+           [(ngModel)]="form.amount" />
+
+    <div class="action-buttons">
+      <button class="btn btn-success" (click)="submitMaintenance()">Save</button>
+      <button class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="summary-row" *ngIf="isAdmin">
+
+  <!-- TOTAL -->
+  <div class="summary-box">
+    <span>Total Collection</span>
+    <h3>₹ {{ totalAmount }}</h3>
+  </div>
+
+  <!-- YEARLY -->
+  <div class="summary-box">
+    <span>Yearly Collection ({{ selectedYearWing }})</span>
+
+    <select [(ngModel)]="selectedYear" (change)="loadSummary()">
+      <option *ngFor="let y of years" [ngValue]="y">{{ y }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedYearWing" (change)="loadSummary()">
+      <option value="Wing A">Wing A</option>
+      <option value="Wing B">Wing B</option>
+    </select>
+
+    <h4>₹ {{ yearlyTotal }}</h4>
+  </div>
+
+  <!-- MONTHLY -->
+  <div class="summary-box">
+    <span>
+      Monthly Collection – {{ selectedMonth }}
+      ({{ selectedMonthWing }} / {{ selectedYear }})
+    </span>
+
+    <select [(ngModel)]="selectedMonth" (change)="loadSummary()">
+      <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedMonthWing" (change)="loadSummary()">
+      <option value="Wing A">Wing A</option>
+      <option value="Wing B">Wing B</option>
+    </select>
+
+    <h4>₹ {{ monthlyTotal }}</h4>
+  </div>
+
+</div>
+
+
+  <!-- ADMIN TABLE -->
+  <div class="table-scroll admin-table" *ngIf="isAdmin">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Flat</th>
+          <th>Wing</th>
+          <th>Total Paid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of maintenanceList; let i = index"
+            (click)="selectFlat(item)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.flat }}</td>
+          <td>{{ item.wing }}</td>
+          <td>₹ {{ item.totalAmount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ADMIN HISTORY -->
+  <div class="history-overlay" *ngIf="selectedFlat && isAdmin">
+    <div class="history-modal">
+      <h4>Flat {{ selectedFlat.flat }} ({{ selectedFlat.wing }})</h4>
+
+      <ul>
+        <li *ngFor="let r of selectedFlat.records" class="record-row">
+          <div class="record-info">
+            {{ r.month }} {{ r.year }} — ₹ {{ r.amount }}
+          </div>
+
+          <div class="record-actions">
+            <button class="btn btn-sm btn-info" (click)="editMaintenance(r)">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteMaintenance(r)">
+              Delete
+            </button>
+          </div>
+        </li>
+      </ul>
+
+      <button class="btn btn-secondary w-100" (click)="closeHistory()">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- MEMBER SECTION -->
+
+  <div *ngIf="isMember" class="member-search">
+    <input class="form-control"
+           placeholder="Flat Number"
+           [(ngModel)]="memberFlat">
+
+    <select class="form-control mt-2"
+            [(ngModel)]="memberWing">
+      <option value="">Select Wing</option>
+      <option *ngFor="let w of wings" [value]="w">{{ w }}</option>
+    </select>
+
+    <button class="btn btn-primary mt-2"
+            (click)="viewMyMaintenance()">
+      View My Maintenance
+    </button>
+  </div>
+
+  <!-- MEMBER DETAILS -->
+  <div *ngIf="memberDetails" class="member-grid mt-3">
+
+    <div class="card member-card">
+      <h5>Flat Owner Details</h5>
+      <p><b>Name:</b> {{ memberDetails.name }}</p>
+      <p><b>Email:</b> {{ memberDetails.email }}</p>
+      <p><b>Contact:</b> {{ memberDetails.mobile }}</p>
+      <p><b>Flat:</b> {{ memberDetails.flat }} ({{ memberDetails.wing }})</p>
+
+      <button class="btn btn-primary w-100 mt-2"
+              (click)="showMemberAddForm = true">
+        + Add Maintenance
+      </button>
+    </div>
+
+    <div *ngIf="showMemberAddForm" class="card member-card">
+      <h5>Add Maintenance</h5>
+
+      <input class="form-control mb-2"
+             [value]="memberDetails.flat"
+             disabled>
+
+      <input class="form-control mb-2"
+             [value]="memberDetails.wing"
+             disabled>
+
+      <select class="form-control mb-2" [(ngModel)]="form.month">
+        <option value="">Select Month</option>
+        <option *ngFor="let m of months">{{ m }}</option>
+      </select>
+
+      <select class="form-control mb-2" [(ngModel)]="form.year">
+        <option value="">Select Year</option>
+        <option *ngFor="let y of years">{{ y }}</option>
+      </select>
+
+      <input type="number"
+             class="form-control mb-2"
+             placeholder="Amount"
+             [(ngModel)]="form.amount">
+
+      <button class="btn btn-primary w-100 mt-2"
+              (click)="submitMaintenance()">
+        Save
+      </button>
+    </div>
+
+  </div>
+
+  <!-- MEMBER HISTORY -->
+  <div *ngIf="showMemberTable && isMember" class="table-scroll mt-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of memberHistory; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ r.month }}</td>
+          <td>{{ r.year }}</td>
+          <td>₹ {{ r.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(public router: Router) {}
+  constructor(private router: Router) {}
 
-  // ✅ ADD THIS METHOD
   isAuthPage(): boolean {
     return this.router.url.includes('/login') || this.router.url.includes('/signup');
   }

@@ -1,0 +1,74 @@
+<div class="account-book-container">
+
+    <div class="header">
+  <h2>Income Book (Maintenance Ledger)</h2>
+
+  <div class="actions">
+    <!-- Year Filter -->
+<select [(ngModel)]="selectedYear" (change)="applyFilters()" class="filter">
+  <option value="">All Years</option>
+  <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+</select>
+
+<!-- Month Filter -->
+<select [(ngModel)]="selectedMonth" (change)="applyFilters()" class="filter">
+  <option value="">All Months</option>
+  <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+</select>
+
+<!-- Wing Filter -->
+<select [(ngModel)]="selectedWing" (change)="applyFilters()" class="filter">
+  <option value="">All Wings</option>
+  <option value="Wing A">Wing A</option>
+  <option value="Wing B">Wing B</option>
+</select>
+
+    <!-- PDF Button -->
+    <button class="pdf-btn" (click)="downloadIncomePDF()">
+      Download PDF
+    </button>
+  </div>
+</div>
+
+  <!-- Summary Card -->
+  <div class="summary-card">
+    <p>Total Income (Maintenance)</p>
+    <h3>₹ {{ totalIncome | number }}</h3>
+  </div>
+
+  <!-- Accountant Style Ledger -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Member Name</th>
+          <th>Flat</th>
+          <th>Wing</th>
+          <th>Credit (₹)</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let entry of ledgerEntries">
+          <td>{{ entry.month }}</td>
+          <td>{{ entry.year }}</td>
+          <td>{{ entry.name }}</td>
+          <td>{{ entry.flat }}</td>
+          <td>{{ entry.wing }}</td>
+          <td class="credit">₹ {{ entry.amount | number }}</td>
+        </tr>
+
+        <!-- Total Row -->
+        <tr class="total-row">
+          <td colspan="5"><strong>Total Income</strong></td>
+          <td class="credit">
+            <strong>₹ {{ totalIncome | number }}</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

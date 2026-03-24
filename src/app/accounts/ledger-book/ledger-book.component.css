@@ -1,0 +1,111 @@
+.account-book-container {
+  padding: 20px;
+  background: #f4f8ff;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  color: #0d47a1;
+  margin: 0;
+}
+
+/* Filters + Button */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #bbdefb;
+}
+
+.pdf-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, #1e5eff, #4b4bff, #6a1bff);
+}
+
+/* Card */
+.summary-card {
+  max-width: 380px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 14px;
+  color: white;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #1e5eff, #4b4bff, #6a1bff);
+}
+
+/* Table */
+.table-container {
+  background: #fff;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+}
+
+th {
+  background: #e3f2fd;
+  color: #0d47a1;
+  padding: 12px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.credit {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.debit {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.balance {
+  font-weight: 700;
+  color: #0d47a1;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .filter, .pdf-btn {
+    width: 100%;
+  }
+}

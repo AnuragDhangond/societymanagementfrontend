@@ -1,6 +1,84 @@
+/* ================= NAVBAR ================= */
 .navbar {
+  height: 56px;
+  background: linear-gradient(
+    90deg,
+    #1e5eff,
+    #4b4bff,
+    #6a1bff
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: #ffffff;
   position: sticky;
   top: 0;
-  z-index: 1000;
-  height: 70px;
+  z-index: 1040;
+  box-shadow: 0 6px 20px rgba(30, 94, 255, 0.35);
+}
+
+/* LEFT */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* HAMBURGER */
+.menu-btn {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+/* TITLE */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+}
+
+/* RIGHT */
+.nav-right {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-right button {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.nav-right button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* DESKTOP */
+@media (min-width: 769px) {
+  .menu-btn {
+    display: none;
+  }
+}
+/* MOBILE FIX: reduce button spacing */
+@media (max-width: 768px) {
+  .nav-right {
+    gap: 4px; /* was 8px */
+  }
+
+  .nav-right button {
+    font-size: 12px;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
 }

@@ -3,11 +3,37 @@
   <div class="card p-4">
 
     <div class="text-center mb-3">
-      <h1>Sai Balaji Society Admin Portal Sign Up</h1>
+      <h1>Sai Balaji Society Sign Up Portal</h1>
       <h5>You can sign up here!</h5>
     </div>
 
     <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+
+      <!-- Role Dropdown -->
+      <div class="mb-3">
+        <label class="form-label">Select Role</label>
+        <select
+          class="form-select"
+          formControlName="role">
+          <option value="">-- Select Role --</option>
+          <option value="admin">Admin</option>
+          <option value="member">Member</option>
+        </select>
+      </div>
+
+      <!-- Admin Code (Only for Admin) -->
+      <div class="mb-3" *ngIf="signupForm.get('role')?.value === 'admin'">
+        <label class="form-label">
+          Admin Signup Code
+          <small class="text-muted">(Provided by Administrator)</small>
+        </label>
+
+        <input
+          formControlName="adminCode"
+          type="password"
+          class="form-control"
+          placeholder="Enter 4-digit admin code">
+      </div>
 
       <div class="mb-3">
         <label class="form-label">Email address</label>
@@ -16,7 +42,7 @@
 
       <div class="mb-3">
         <label class="form-label">Name</label>
-        <input formControlName="name" type="text" class="form-control" placeholder="Admin Name">
+        <input formControlName="name" type="text" class="form-control" placeholder="Full Name">
       </div>
 
       <div class="mb-3">

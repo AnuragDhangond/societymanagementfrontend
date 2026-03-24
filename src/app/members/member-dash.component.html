@@ -1,92 +1,118 @@
-<div class="table-wrapper">
-  <div class="table-container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Society Member Name</th>
-          <th>Society Member Email</th>
-          <th>Member Flat Number</th>
-          <th>Member Phone Number</th>
-          <th>Wing</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-  <tbody>
-  <tr *ngFor="let data of allMemberData; let i = index">
-  <td>{{ i + 1 }}</td> 
-  <td>{{ data.name }}</td>
-  <td>{{ data.email }}</td>
-  <td>{{ data.address }}</td>
-  <td>{{ data.mobile }}</td>
-  <td>{{ data.services }}</td>
-  <td>
-    <button 
-      (click)="onEditMem(data)" 
-      class="btn btn-info"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
-      Edit
-    </button>&nbsp;
+<div class="main-content">
 
-    <button 
-      (click)="deleteMem(data._id)" 
-      class="btn btn-danger">
-      Delete
-    </button>
-  </td>
-</tr>
-</tbody>
-</table>
+  <div class="table-wrapper">
+    <div class="table-container">
 
-<!-- Modal for Add/Edit Form -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Society Member Name</th>
+            <th>Society Member Email</th>
+            <th>Member Flat Number</th>
+            <th>Member Phone Number</th>
+            <th>Wing</th>
+            <th *ngIf="isAdmin">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let data of allMemberData; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.mobile }}</td>
+            <td>{{ data.services }}</td>
+
+            <td *ngIf="isAdmin">
+              <button
+                class="btn btn-info"
+                (click)="onEditMem(data)">
+                Edit
+              </button>&nbsp;
+
+              <button
+                class="btn btn-danger"
+                (click)="deleteMem(data._id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Member Records</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">Member Records</h5>
+        <button type="button" class="btn-close" (click)="onClose()"></button>
       </div>
+
       <div class="modal-body">
         <form [formGroup]="formValue">
-          
-          <!-- Name Input -->
+
           <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control" formControlName="name" placeholder="Society Member Name">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name">
           </div>
-          <!-- Email Input -->
+
           <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" formControlName="email" placeholder="member@gmail.com">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="email">
           </div>
-          <!-- Address Input -->
+
           <div class="mb-3">
-            <label class="form-label">Member Flat Number</label>
-            <input type="text" class="form-control" formControlName="address" placeholder="Flat 101, Wing A, Society Name, Pune">
+            <label>Flat Number</label>
+            <input type="text" class="form-control" formControlName="address">
           </div>
-          <!-- Mobile Input -->
+
           <div class="mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="number" class="form-control" formControlName="mobile" placeholder="+91-9876543230">
+            <label>Phone</label>
+            <input type="number" class="form-control" formControlName="mobile">
           </div>
-          <!-- Wing Input -->
+
           <div class="mb-3">
-            <label class="form-label">Wing</label>
-            <input type="text" class="form-control" formControlName="services" placeholder="Wing A">
-          </div>
+  <label>Wing</label>
+  <select class="form-select" formControlName="services">
+    <option value="">Select Wing</option>
+    <option value="Wing A">Wing A</option>
+    <option value="Wing B">Wing B</option>
+  </select>
+</div>
+
+
         </form>
       </div>
+
       <div class="modal-footer">
-        <!-- Close button (used by TS to programmatically close the modal) -->
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModal">Close</button> 
-        
-        <!-- Button for ADD (Visible only when adding a new member) -->
-        <button *ngIf="showAdd" type="button" class="btn btn-primary" (click)="addMember()">Add Details</button>
-        
-        <!-- Button for UPDATE (Visible only when editing an existing member) -->
-        <button *ngIf="showBtn" type="button" class="btn btn-primary" (click)="updateMem()">Update</button>
+        <button class="btn btn-secondary" (click)="onClose()">Close</button>
+
+        <button
+          *ngIf="showAdd && isAdmin"
+          class="btn btn-primary"
+          [disabled]="formValue.invalid"
+          (click)="addMember()">
+          Add
+        </button>
+
+        <button
+          *ngIf="showBtn && isAdmin"
+          class="btn btn-primary"
+          [disabled]="formValue.invalid"
+          (click)="updateMem()">
+          Update
+        </button>
       </div>
+
     </div>
   </div>
 </div>

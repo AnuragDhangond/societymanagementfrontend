@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../shared/api.service';
 import { MemberData } from './member.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UiService } from '../shared/ui.service';
 
 @Component({
   selector: 'app-member-dash',
@@ -13,58 +13,56 @@ export class MemberDashComponent implements OnInit {
 
   formValue!: FormGroup;
   memberModelObj: MemberData = new MemberData();
-  allMemberData: any = [];
+  allMemberData: any[] = [];
+
   showAdd = false;
   showBtn = false;
+
+  isAdmin = false;
+  isMember = false;
 
   constructor(
     private formbuilder: FormBuilder,
     private api: ApiService,
-    private route: ActivatedRoute,
-    private router: Router
+    private ui: UiService
   ) {}
 
   ngOnInit(): void {
+
+    const role = localStorage.getItem('role');
+    this.isAdmin = role === 'admin';
+    this.isMember = role === 'member';
+
     this.formValue = this.formbuilder.group({
-      name: [''],
-      email: [''],
-      mobile: [''],
-      address: [''],
-      services: ['']
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', Validators.required],
+      address: ['', Validators.required],
+      services: ['', Validators.required]
     });
 
-    // 🔑 Listen to navbar button
-    this.route.queryParams.subscribe(params => {
-      if (params['action'] === 'addMember') {
+    if (this.isAdmin) {
+      this.ui.openAddMember$.subscribe(() => {
         this.clickAddMember();
-
-        // 🔑 clear param so it doesn't reopen
-        this.router.navigate([], {
-          queryParams: { action: null },
-          queryParamsHandling: 'merge'
-        });
-      }
-    });
+      });
+    }
 
     this.getAllData();
   }
 
-  // OPEN ADD MODAL
-  clickAddMember() {
-    this.formValue.reset();
-    this.showAdd = true;
-    this.showBtn = false;
-
+  // ==========================
+  // MODAL CONTROL
+  // ==========================
+  openModal() {
     const modal = document.getElementById('exampleModal');
     if (modal) {
       modal.classList.add('show');
       modal.style.display = 'block';
       modal.removeAttribute('aria-hidden');
-      modal.setAttribute('aria-modal', 'true');
+      document.body.classList.add('modal-open');
     }
   }
 
-  // CLOSE MODAL
   closeModal() {
     const modal = document.getElementById('exampleModal');
     if (modal) {
@@ -72,34 +70,56 @@ export class MemberDashComponent implements OnInit {
       modal.style.display = 'none';
       modal.setAttribute('aria-hidden', 'true');
     }
+
+    document.body.classList.remove('modal-open');
+
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.remove();
   }
 
-  // ADD MEMBER
-  addMember() {
-    const newMember = {
-      name: this.formValue.value.name,
-      email: this.formValue.value.email,
-      mobile: Number(this.formValue.value.mobile),
-      address: this.formValue.value.address,
-      services: this.formValue.value.services
-    };
+  onClose() {
+    this.formValue.reset();
+    this.showAdd = false;
+    this.showBtn = false;
+    this.closeModal();
+  }
 
-    this.api.postMember(newMember).subscribe(() => {
-      this.formValue.reset();
-      this.closeModal();
+  // ==========================
+  // ADD MEMBER
+  // ==========================
+  clickAddMember() {
+    if (!this.isAdmin) return;
+
+    this.formValue.reset();
+    this.showAdd = true;
+    this.showBtn = false;
+    this.openModal();
+  }
+
+  addMember() {
+    if (!this.isAdmin || this.formValue.invalid) return;
+
+    this.api.postMember(this.formValue.value).subscribe(() => {
+      this.onClose();
       this.getAllData();
     });
   }
 
+  // ==========================
   // GET ALL MEMBERS
+  // ==========================
   getAllData() {
-    this.api.getMember().subscribe(res => {
+    this.api.getMember().subscribe((res: any) => {
       this.allMemberData = res;
     });
   }
 
+  // ==========================
   // DELETE MEMBER
+  // ==========================
   deleteMem(id: string) {
+    if (!this.isAdmin) return;
+
     if (!confirm('Are you sure you want to delete this member?')) return;
 
     this.api.deleteMember(id).subscribe(() => {
@@ -107,37 +127,30 @@ export class MemberDashComponent implements OnInit {
     });
   }
 
+  // ==========================
   // EDIT MEMBER
+  // ==========================
   onEditMem(data: any) {
+    if (!this.isAdmin) return;
+
     this.showAdd = false;
     this.showBtn = true;
     this.memberModelObj._id = data._id;
 
-    this.formValue.patchValue({
-      name: data.name,
-      email: data.email,
-      mobile: data.mobile,
-      address: data.address,
-      services: data.services
-    });
-
-    this.clickAddMember();
+    this.formValue.patchValue(data);
+    this.openModal();
   }
 
+  // ==========================
   // UPDATE MEMBER
+  // ==========================
   updateMem() {
-    const updatedMember = {
-      name: this.formValue.value.name,
-      email: this.formValue.value.email,
-      mobile: Number(this.formValue.value.mobile),
-      address: this.formValue.value.address,
-      services: this.formValue.value.services
-    };
+    if (!this.isAdmin || this.formValue.invalid) return;
 
-    this.api.updateMember(this.memberModelObj._id!, updatedMember).subscribe(() => {
-      this.formValue.reset();
-      this.closeModal();
-      this.getAllData();
-    });
+    this.api.updateMember(this.memberModelObj._id!, this.formValue.value)
+      .subscribe(() => {
+        this.onClose();
+        this.getAllData();
+      });
   }
 }

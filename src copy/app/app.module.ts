@@ -7,8 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-
-// 💡 RE-IMPORT THIS MODULE:
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -19,14 +17,12 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     LoginComponent,
     SignupComponent,
     SidebarComponent,
-    NavbarComponent,
-    // MemberDashComponent is now correctly removed (lazy-loaded)
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // 💡 ADD ReactiveFormsModule back here
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],

@@ -1,0 +1,73 @@
+<div class="account-book-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>Society Balance Sheet</h2>
+
+    <div class="actions">
+      <!-- Year Filter -->
+      <select [(ngModel)]="selectedYear" (change)="applyFilters()" class="filter">
+        <option value="">All Years</option>
+        <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+      </select>
+
+      <!-- Month Filter -->
+      <select [(ngModel)]="selectedMonth" (change)="applyFilters()" class="filter">
+        <option value="">All Months</option>
+        <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+      </select>
+
+      <!-- PDF Button -->
+      <button class="pdf-btn" (click)="downloadBalancePDF()">
+        Download Balance Sheet
+      </button>
+    </div>
+  </div>
+
+  <!-- SUMMARY CARDS -->
+  <div class="cards">
+    <div class="card income">
+      <p>Total Income</p>
+      <h3>₹ {{ totalIncome | number }}</h3>
+    </div>
+
+    <div class="card expense">
+      <p>Total Expenses</p>
+      <h3>₹ {{ totalExpenses | number }}</h3>
+    </div>
+
+    <div class="card balance">
+      <p>Net Balance</p>
+      <h3>₹ {{ netBalance | number }}</h3>
+    </div>
+  </div>
+
+  <!-- SUMMARY TABLE -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Financial Category</th>
+          <th>Amount (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Maintenance Income</td>
+          <td class="credit">₹ {{ totalIncome | number }}</td>
+        </tr>
+        <tr>
+          <td>Total Society Expenses</td>
+          <td class="debit">₹ {{ totalExpenses | number }}</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Net Balance (Surplus / Deficit)</strong></td>
+          <td class="balance">
+            <strong>₹ {{ netBalance | number }}</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

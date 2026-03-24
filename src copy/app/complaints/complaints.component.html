@@ -1,1 +1,141 @@
-<p>complaints works!</p>
+<div class="complaints-wrapper">
+
+  <h2>Complaints Dashboard</h2>
+
+  <!-- ================= MEMBER SECTION ================= -->
+  <div *ngIf="isMember">
+
+    <!-- VERIFY FLAT -->
+    <div class="card mb-3 p-3">
+      <div class="form-row">
+        <input
+          class="form-control"
+          placeholder="Flat Number"
+          [(ngModel)]="flat">
+        <br>
+        <select class="form-control" [(ngModel)]="wing">
+          <option value="">Select Wing</option>
+          <option *ngFor="let w of wings" [value]="w">{{ w }}</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary mt-2 w-100" (click)="verifyFlat()">
+        Verify Flat
+      </button>
+    </div>
+
+    
+    <!-- OWNER + COMPLAINT WRAPPER -->
+<div *ngIf="isVerified" class="owner-complaint-grid">
+
+  <!-- OWNER DETAILS -->
+  <div class="card owner-card">
+    <h5>Flat Owner Details</h5>
+    <p><b>Name:</b> {{ memberDetails?.name }}</p>
+    <p><b>Email:</b> {{ memberDetails?.email }}</p>
+    <p><b>Contact:</b> {{ memberDetails?.mobile }}</p>
+    <p><b>Flat:</b> {{ memberDetails?.flat }} ({{ memberDetails?.wing }})</p>
+  </div>
+
+  <!-- RAISE COMPLAINT -->
+  <div class="card complaint-card">
+    <h5>Raise Complaint</h5>
+
+    <select class="form-control mb-2" [(ngModel)]="complaint.category">
+      <option value="">Select Category</option>
+      <option *ngFor="let c of categories">{{ c }}</option>
+    </select>
+
+    <input class="form-control mb-2"
+           placeholder="Subject"
+           [(ngModel)]="complaint.subject">
+
+    <textarea class="form-control mb-2"
+              rows="4"
+              placeholder="Description"
+              [(ngModel)]="complaint.description"></textarea>
+
+    <button class="btn btn-primary mt-2 w-100"
+            (click)="submitComplaint()">
+      Submit Complaint
+    </button>
+  </div>
+
+</div>
+
+
+    <!-- MY COMPLAINTS -->
+    <div *ngIf="myComplaints.length" class="table-scroll">
+      <h5>My Complaints</h5>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let c of myComplaints; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ c.subject }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.remark || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ================= ADMIN SECTION ================= -->
+  <div *ngIf="isAdmin">
+
+    <h5>All Complaints</h5>
+
+    <div class="table-scroll">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Flat</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Remark</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let c of allComplaints">
+            <td>{{ c.flat }} ({{ c.wing }})</td>
+            <td>{{ c.subject }}</td>
+
+            <td>
+              <select [(ngModel)]="c.status" class="form-control">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </td>
+
+            <td>
+              <input class="form-control" [(ngModel)]="c.remark">
+            </td>
+
+            <td>
+              <button class="btn btn-sm btn-primary w-100"
+                      (click)="updateStatus(c)">
+                Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

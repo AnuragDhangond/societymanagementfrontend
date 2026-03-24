@@ -1,61 +1,80 @@
-/* Sidebar Container */
+/* =========================
+   SIDEBAR (DESKTOP DEFAULT)
+========================= */
 .sidebar {
   width: 250px;
   height: 100vh;
-  background: linear-gradient(180deg, #0062ff, #003c9d);
-  color: white;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #0d47a1,
+    #1565c0,
+    #6f0eca
+  );
+  color: #ffffff;
   padding-top: 20px;
   position: fixed;
   left: 0;
   top: 0;
-  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 6px 0 18px rgba(13, 71, 161, 0.35);
+  z-index: 1001;
 }
 
 /* Header */
 .sidebar-header {
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 600;
   padding: 20px;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.5px;
 }
 
-/* Menu List */
+/* Menu */
 .menu {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Items */
+/* Menu Items */
 .menu li {
   padding: 15px 25px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: 0.3s;
+  color: #e3f2fd;
+  transition: all 0.3s ease;
 }
 
-/* Hover Effect */
+/* Hover */
 .menu li:hover {
   background: rgba(255, 255, 255, 0.15);
   padding-left: 35px;
+  color: #ffffff;
 }
 
-/* Active Route */
+/* Active */
 .active {
-  background: rgba(0, 0, 0, 0.3) !important;
-  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #1e5eff,
+    #4b4bff
+  ) !important;
+  color: #ffffff;
+  font-weight: 600;
+  border-left: 4px solid #ffffff;
 }
 
-/* Logout Option */
+/* Logout */
 .logout {
   margin-top: 40px;
-  background: rgba(255, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
 .logout:hover {
-  background: rgba(255, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.22);
 }

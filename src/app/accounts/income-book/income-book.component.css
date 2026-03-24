@@ -1,0 +1,142 @@
+/* ===== CONTAINER ===== */
+.account-book-container {
+  padding: 20px;
+  background: #f4f8ff;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* better for mobile */
+  flex-wrap: wrap; /* ⭐ MOST IMPORTANT LINE */
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  color: #0d47a1;
+  margin: 0;
+  font-size: 24px;
+  word-break: break-word; /* prevent cut title */
+}
+
+/* ===== ACTIONS (Filters + Button) ===== */
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap; /* ⭐ THIS FIXES OVERFLOW */
+  max-width: 100%;
+}
+
+/* Filters */
+.filter {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #bbdefb;
+  min-width: 120px;
+  max-width: 100%;
+}
+
+/* PDF Button */
+.pdf-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, #1e5eff, #4b4bff, #6a1bff);
+  box-shadow: 0 4px 12px rgba(30, 94, 255, 0.35);
+  white-space: nowrap;
+}
+
+/* ===== SUMMARY CARD ===== */
+.summary-card {
+  width: 100%;
+  max-width: 350px; /* instead of fixed 320px */
+  padding: 20px;
+  border-radius: 14px;
+  color: white;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #1e5eff, #4b4bff, #6a1bff);
+  box-shadow: 0 10px 28px rgba(30, 94, 255, 0.35);
+}
+
+/* ===== TABLE ===== */
+.table-container {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow-x: auto; /* ⭐ horizontal scroll on mobile */
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 4px 16px rgba(0, 64, 128, 0.15);
+}
+
+table {
+  width: 100%;
+  min-width: 700px; /* ledger needs width */
+  border-collapse: collapse;
+}
+
+th {
+  background: #e3f2fd;
+  color: #0d47a1;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.credit {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.total-row {
+  background: #f1f6ff;
+  font-weight: 600;
+}
+
+/* ===== MOBILE RESPONSIVE (REAL FIX) ===== */
+@media (max-width: 768px) {
+
+  .account-book-container {
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column; /* ⭐ STACK TITLE + FILTERS */
+    align-items: stretch;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .actions {
+    width: 100%;
+    flex-direction: column; /* ⭐ DROPDOWNS GO VERTICAL */
+    align-items: stretch;
+  }
+
+  .filter {
+    width: 100%; /* full width dropdowns */
+  }
+
+  .pdf-btn {
+    width: 100%; /* full width button */
+  }
+
+  .summary-card {
+    max-width: 100%;
+  }
+}

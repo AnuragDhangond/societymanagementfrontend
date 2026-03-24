@@ -10,13 +10,12 @@ import { ApiService } from '../shared/api.service';
 })
 export class LoginComponent implements OnInit {
 
-  // Form
   loginForm!: FormGroup;
 
   constructor(
     private formbuilder: FormBuilder,
-    private api: ApiService,     
-    private _router: Router
+    private api: ApiService,
+    private router: Router   
   ) {}
 
   ngOnInit(): void {
@@ -26,16 +25,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // LOGIN FUNCTION
   logIn() {
   this.api.loginUser(this.loginForm.value).subscribe(
-    res => {
+    (res: any) => {
+
       alert("Login Successful!");
 
       localStorage.setItem('isLoggedIn', 'true');
 
       localStorage.setItem('user', JSON.stringify(res.user));
-      this._router.navigate(['/members']);
+
+      localStorage.setItem('role', res.user.role);
+
+      localStorage.setItem('userId', res.user.id);
+
+      this.router.navigate(['/members']);
     },
     err => {
       alert("Invalid Email or Password");

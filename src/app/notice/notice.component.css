@@ -1,0 +1,174 @@
+/* ==============================
+   NOTICE CONTAINER
+   ============================== */
+
+.notice-container {
+  width: calc(100% - 10px);
+  margin-left: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+/* ==============================
+   PAGE TITLE
+   ============================== */
+
+.notice-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* ==============================
+   ADD NOTICE BOX (ADMIN ONLY)
+   ============================== */
+
+.add-notice-box {
+  background: #eef2ff;
+  padding: 22px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+
+  border: 1px solid #c7d2fe;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.add-notice-box h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.add-notice-box input,
+.add-notice-box textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+
+  border-radius: 10px;
+  border: 1px solid #9ca3af;
+  font-size: 14px;
+
+  outline: none;
+}
+
+.add-notice-box input:focus,
+.add-notice-box textarea:focus {
+  border-color: #4f46e5;
+}
+
+.add-notice-box textarea {
+  min-height: 110px;
+  resize: none;
+}
+
+.add-notice-box button {
+  width: 100%;
+  padding: 12px;
+
+  background: #4f46e5;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-notice-box button:hover {
+  background: #4338ca;
+}
+
+/* ==============================
+   NOTICE LIST
+   ============================== */
+
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ==============================
+   NOTICE CARD
+   ============================== */
+
+.notice-card {
+  background: #ffffff;
+  padding: 20px 22px;
+  border-radius: 14px;
+
+  border: 1px solid #d1d5db;
+  border-left: 6px solid #4f46e5;
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notice-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.notice-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.notice-card p {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.notice-card span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ==============================
+   NO NOTICE MESSAGE
+   ============================== */
+
+.no-notice {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+/* ==============================
+   MOBILE RESPONSIVE
+   ============================== */
+
+@media (max-width: 600px) {
+  .notice-container {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px;
+  }
+
+  .notice-container h2 {
+    font-size: 22px;
+  }
+
+  .add-notice-box {
+    padding: 18px;
+  }
+
+  .notice-card {
+    padding: 16px;
+  }
+}

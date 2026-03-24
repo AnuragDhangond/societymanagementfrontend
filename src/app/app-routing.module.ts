@@ -11,13 +11,17 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  // ⚡️ Lazy Loading Configuration:
+  
+  // Lazy Loading Configuration:
   { 
     path: 'members', 
     loadChildren: () => import('./members/members.module').then(m => m.MembersModule) 
   },
   { path: 'maintenance', loadChildren: () => import('./maintenance/maintenance.module').then(m => m.MaintenanceModule) },
   { path: 'complaints', loadChildren: () => import('./complaints/complaints.module').then(m => m.ComplaintsModule) },
+  { path: 'expenses', loadChildren: () => import('./expenses/expenses.module').then(m => m.ExpensesModule) },
+  { path: 'notice',loadChildren: () => import('./notice/notice.module').then(m => m.NoticeModule)},
+  {path: 'accounts',loadChildren: () => import('./accounts/accounts.module').then(m => m.AccountsModule)},
   { path: 'election', loadChildren: () => import('./election/election.module').then(m => m.ElectionModule) }
 ];
 

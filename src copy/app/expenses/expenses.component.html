@@ -1,0 +1,137 @@
+<div class="expenses-container">
+
+  <!-- ================= ADMIN SUMMARY CARDS ================= -->
+  <div class="cards" *ngIf="role === 'admin'">
+    <div class="card">
+      <p>Total Maintenance Collection</p>
+      <h3>₹ {{ totalCollection }}</h3>
+    </div>
+
+    <div class="card">
+      <p>Total Expenses</p>
+      <h3>₹ {{ totalExpenses }}</h3>
+    </div>
+
+    <div class="card">
+      <p>Remaining Balance</p>
+      <h3>₹ {{ remainingAmount }}</h3>
+    </div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
+  <div class="header">
+    <h2>Society Expenses </h2>
+
+    <button
+      *ngIf="role === 'admin'"
+      class="add-btn"
+      (click)="openAddForm()">
+      + Add Expense
+    </button>
+  </div>
+
+  <!-- ================= DESKTOP TABLE ================= -->
+  <div class="desktop-view">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th *ngIf="role === 'admin'">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exp of expenses">
+          <td>{{ exp.date | date:'dd-MM-yyyy' }}</td>
+          <td>{{ exp.title }}</td>
+          <td>{{ exp.category }}</td>
+          <td>₹ {{ exp.amount }}</td>
+          <td>{{ exp.description }}</td>
+
+          <td *ngIf="role === 'admin'">
+            <button class="edit" (click)="openEditForm(exp)">Edit</button>
+            <button class="delete" (click)="deleteExpense(exp)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================= MOBILE VIEW ================= -->
+  <div class="mobile-view">
+    <div class="expense-card" *ngFor="let exp of expenses">
+      <h4>{{ exp.title }}</h4>
+      <p><b>Date:</b> {{ exp.date | date:'dd-MM-yyyy' }}</p>
+      <p><b>Category:</b> {{ exp.category }}</p>
+      <p><b>Amount:</b> ₹ {{ exp.amount }}</p>
+      <p><b>Description:</b> {{ exp.description }}</p>
+
+      <div class="actions" *ngIf="role === 'admin'">
+        <button class="edit" (click)="openEditForm(exp)">Edit</button>
+        <button class="delete" (click)="deleteExpense(exp)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= ADD / EDIT EXPENSE MODAL ================= -->
+<div class="modal-backdrop" *ngIf="showForm">
+  <div class="modal-box">
+
+    <h3>{{ isEditMode ? 'Edit Expense' : 'Add Expense' }}</h3>
+
+    <form (ngSubmit)="isEditMode ? updateExpense() : saveExpense()">
+
+      <input type="text"
+             placeholder="Title"
+             [(ngModel)]="expenseForm.title"
+             name="title"
+             required>
+
+      <select [(ngModel)]="expenseForm.category"
+              name="category"
+              required>
+        <option value="">Select Category</option>
+        <option>Electricity</option>
+        <option>Cleaning</option>
+        <option>Repair</option>
+        <option>Security</option>
+        <option>Other</option>
+      </select>
+
+      <input type="number"
+             placeholder="Amount"
+             [(ngModel)]="expenseForm.amount"
+             name="amount"
+             required>
+
+      <input type="date"
+             [(ngModel)]="expenseForm.date"
+             name="date"
+             required>
+
+      <textarea placeholder="Description"
+                [(ngModel)]="expenseForm.description"
+                name="description"></textarea>
+
+      <div class="modal-actions">
+        <button type="submit" class="save-btn">
+          {{ isEditMode ? 'Update' : 'Save' }}
+        </button>
+
+        <button type="button"
+                class="cancel-btn"
+                (click)="closeForm()">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
