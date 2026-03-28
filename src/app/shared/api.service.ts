@@ -71,7 +71,11 @@ export class ApiService {
   }
 
   signupUser(data: any) {
-    return this.http.post(`${this.baseURL}/signup`, data);
+    return this.http.post(`${this.baseURL}/signup/register`, data);
+  }
+
+  resetPassword(data: any) {
+    return this.http.put(`${this.baseURL}/login/reset-password`, data);
   }
 
   // ================= COMPLAINTS =================

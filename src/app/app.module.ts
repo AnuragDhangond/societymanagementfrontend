@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -16,6 +17,7 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
+    ForgotPasswordComponent,
     SidebarComponent,
     NavbarComponent
   ],

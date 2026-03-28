@@ -11,6 +11,6 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   isAuthPage(): boolean {
-    return this.router.url.includes('/login') || this.router.url.includes('/signup');
+    return this.router.url.includes('/login') || this.router.url.includes('/signup') || this.router.url.includes('/forgot-password');
   }
 }

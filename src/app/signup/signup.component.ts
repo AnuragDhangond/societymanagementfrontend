@@ -60,7 +60,7 @@ export class SignupComponent implements OnInit {
     };
 
     this._http.post<any>(
-      `${environment.apiUrl}/api/signup/register`,
+      `${environment.apiUrl}/signup/register`,
       signupData
     ).subscribe({
       next: () => {
