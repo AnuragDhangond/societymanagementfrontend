@@ -39,16 +39,12 @@ export class MaintenanceComponent implements OnInit {
 
   years = [2024, 2025, 2026];
 
-  // ================= SUMMARY STATE (NEW) =================
-  // YEARLY
-selectedYear = new Date().getFullYear();
-selectedYearWing = 'Wing A';
+  // ================= SUMMARY STATE =================
+  selectedYear = new Date().getFullYear();
+  selectedYearWing = 'Wing A';
 
-// MONTHLY
-selectedMonth = new Date().toLocaleString('default', { month: 'long' });
-selectedMonthWing = 'Wing A';
-
-
+  selectedMonth = new Date().toLocaleString('default', { month: 'long' });
+  selectedMonthWing = 'Wing A';
 
   monthlyTotal = 0;
   yearlyTotal = 0;
@@ -74,8 +70,50 @@ selectedMonthWing = 'Wing A';
 
     if (this.isAdmin) {
       this.loadMaintenance();
-      this.loadSummary(); // ✅ ADDED (only 1 line)
+      this.loadSummary();
     }
+
+    // AUTO-LOAD member maintenance from localStorage
+    if (this.isMember) {
+      this.autoLoadMemberMaintenance();
+    }
+  }
+
+  // ================= AUTO LOAD (FROM LOCALSTORAGE) =================
+  autoLoadMemberMaintenance() {
+    const flat = localStorage.getItem('flat');
+    const wing = localStorage.getItem('wing');
+
+    if (!flat || !wing || flat === 'null' || wing === 'null' || flat === 'undefined' || wing === 'undefined') return;
+
+    this.memberFlat = flat;
+    this.memberWing = wing;
+
+    // Auto-trigger the view
+    this.api.getMaintenanceByFlat(flat, wing).subscribe({
+      next: (res: any) => {
+        this.memberDetails = res.member || {
+          name: JSON.parse(localStorage.getItem('user') || '{}').name || '',
+          flat: flat,
+          wing: wing
+        };
+        this.memberHistory = res.records || [];
+        this.showMemberTable = true;
+      },
+      error: () => {
+        // If no maintenance records yet, still show details
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        this.memberDetails = {
+          name: user.name || '',
+          email: user.email || '',
+          mobile: user.mobile || '',
+          flat: flat,
+          wing: wing
+        };
+        this.memberHistory = [];
+        this.showMemberTable = true;
+      }
+    });
   }
 
   // ================= LOAD MEMBERS =================
@@ -104,10 +142,10 @@ selectedMonthWing = 'Wing A';
     );
   }
 
-  // ================= SUMMARY (NEW) =================
+  // ================= SUMMARY =================
   loadSummary() {
 
-  // ===== YEARLY (OBJECT RESPONSE) =====
+  // YEARLY
   this.api.getYearlyWingSummary(this.selectedYear, this.selectedYearWing)
     .subscribe({
       next: (res: any) => {
@@ -116,7 +154,7 @@ selectedMonthWing = 'Wing A';
       error: () => this.yearlyTotal = 0
     });
 
-  // ===== MONTHLY (ARRAY RESPONSE) =====
+  // MONTHLY
   this.api.getMonthlyWingSummary(this.selectedYear, this.selectedMonthWing)
     .subscribe((res: any[]) => {
       const monthData = res.find(
@@ -125,9 +163,6 @@ selectedMonthWing = 'Wing A';
       this.monthlyTotal = monthData ? monthData.totalAmount : 0;
     });
 }
-
-
-
 
   // ================= SELECT FLAT =================
   selectFlat(item: any) {
@@ -181,7 +216,7 @@ selectedMonthWing = 'Wing A';
         next: () => {
           alert('Maintenance deleted');
           this.loadMaintenance();
-          this.loadSummary(); // ✅ keep summary in sync
+          this.loadSummary();
           this.selectedFlat = null;
         },
         error: () => alert('Failed to delete maintenance')
@@ -211,7 +246,7 @@ selectedMonthWing = 'Wing A';
           alert('Maintenance updated successfully');
           this.resetFormState();
           this.loadMaintenance();
-          this.loadSummary(); // ✅ sync
+          this.loadSummary();
         },
         error: err =>
           alert(err.error?.message || 'Failed to update maintenance')
@@ -229,8 +264,16 @@ selectedMonthWing = 'Wing A';
       next: () => {
         alert('Maintenance added successfully');
         this.resetFormState();
-        this.loadMaintenance();
-        this.loadSummary(); // ✅ sync
+
+        if (this.isAdmin) {
+          this.loadMaintenance();
+          this.loadSummary();
+        }
+
+        // Reload member history
+        if (this.isMember) {
+          this.autoLoadMemberMaintenance();
+        }
       },
       error: err =>
         alert(err.error?.message || 'Failed to save maintenance')
@@ -245,7 +288,7 @@ selectedMonthWing = 'Wing A';
     this.form = { flat: '', wing: '', month: '', year: '', amount: null };
   }
 
-  // ================= MEMBER VIEW =================
+  // ================= MEMBER VIEW (kept as fallback) =================
   viewMyMaintenance() {
     const member = this.membersList.find(
       m => m.address === this.memberFlat && m.services === this.memberWing

@@ -1,65 +1,116 @@
 <div class="signup-wrapper">
 
-  <div class="card p-4">
+  <!-- Floating Decorative Shapes -->
+  <div class="floating-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
 
-    <div class="text-center mb-3">
-      <h1>Sai Balaji Society Sign Up Portal</h1>
-      <h5>You can sign up here!</h5>
+  <div class="card">
+
+    <!-- Branding -->
+    <div class="brand-header">
+      <div class="brand-icon">🏠</div>
+      <h1>Sai Balaji Society</h1>
+      <p>Create your account</p>
     </div>
 
     <form [formGroup]="signupForm" (ngSubmit)="signUp()">
 
       <!-- Role Dropdown -->
-      <div class="mb-3">
+      <div class="input-group-custom">
         <label class="form-label">Select Role</label>
-        <select
-          class="form-select"
-          formControlName="role">
-          <option value="">-- Select Role --</option>
-          <option value="admin">Admin</option>
-          <option value="member">Member</option>
-        </select>
+        <div class="input-icon-wrap">
+          <span class="input-icon">👤</span>
+          <select class="form-control" formControlName="role" id="signupRole">
+            <option value="">-- Select Role --</option>
+            <option value="admin">Admin</option>
+            <option value="member">Member</option>
+          </select>
+        </div>
       </div>
 
       <!-- Admin Code (Only for Admin) -->
-      <div class="mb-3" *ngIf="signupForm.get('role')?.value === 'admin'">
+      <div class="input-group-custom" *ngIf="signupForm.get('role')?.value === 'admin'">
         <label class="form-label">
           Admin Signup Code
-          <small class="text-muted">(Provided by Administrator)</small>
+          <small class="text-muted-light">(Provided by Administrator)</small>
         </label>
-
-        <input
-          formControlName="adminCode"
-          type="password"
-          class="form-control"
-          placeholder="Enter 4-digit admin code">
+        <div class="input-icon-wrap">
+          <span class="input-icon">🔑</span>
+          <input formControlName="adminCode"
+                 type="password"
+                 class="form-control"
+                 placeholder="Enter 4-digit admin code">
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Email address</label>
-        <input formControlName="email" type="email" class="form-control" placeholder="Email address">
+      <!-- ===== FLAT + WING (Only for Member) ===== -->
+      <div *ngIf="signupForm.get('role')?.value === 'member'" class="flat-wing-row">
+        <div class="input-group-custom flat-input">
+          <label class="form-label">Flat Number</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🏢</span>
+            <input formControlName="flat"
+                   type="text"
+                   class="form-control"
+                   placeholder="e.g. 101"
+                   maxlength="3"
+                   pattern="[0-9]{3}">
+          </div>
+        </div>
+
+        <div class="input-group-custom wing-input">
+          <label class="form-label">Wing</label>
+          <div class="input-icon-wrap">
+            <span class="input-icon">🅰️</span>
+            <select class="form-control" formControlName="wing">
+              <option value="">Select</option>
+              <option value="Wing A">Wing A</option>
+              <option value="Wing B">Wing B</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Name</label>
-        <input formControlName="name" type="text" class="form-control" placeholder="Full Name">
+      <div class="input-group-custom">
+        <label class="form-label">Email Address</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">📧</span>
+          <input formControlName="email" type="email" class="form-control" placeholder="you@example.com">
+        </div>
       </div>
 
-      <div class="mb-3">
+      <div class="input-group-custom">
+        <label class="form-label">Full Name</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">✏️</span>
+          <input formControlName="name" type="text" class="form-control" placeholder="Full Name">
+        </div>
+      </div>
+
+      <div class="input-group-custom">
         <label class="form-label">Phone Number</label>
-        <input formControlName="mobile" type="number" class="form-control" placeholder="Phone">
+        <div class="input-icon-wrap">
+          <span class="input-icon">📱</span>
+          <input formControlName="mobile" type="number" class="form-control" placeholder="10-digit number">
+        </div>
       </div>
 
-      <div class="mb-3">
+      <div class="input-group-custom">
         <label class="form-label">Password</label>
-        <input formControlName="password" type="password" class="form-control" placeholder="Password">
+        <div class="input-icon-wrap">
+          <span class="input-icon">🔒</span>
+          <input formControlName="password" type="password" class="form-control" placeholder="Min 6 characters">
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      <button type="submit" id="signupBtn" class="btn-submit">Sign Up</button>
     </form>
 
-    <div class="mt-3 text-center">
-      <a routerLink="/login">Already User? Click to Login</a>
+    <div class="auth-links">
+      <a routerLink="/login">Already a user? Click to Login</a>
     </div>
 
   </div>

@@ -1,67 +1,92 @@
 /* ================= NAVBAR ================= */
 .navbar {
-  height: 56px;
-  background: linear-gradient(
-    90deg,
-    #1e5eff,
-    #4b4bff,
-    #6a1bff
-  );
+  height: 60px;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+  padding: 0 20px;
   color: #ffffff;
   position: sticky;
   top: 0;
   z-index: 1040;
-  box-shadow: 0 6px 20px rgba(30, 94, 255, 0.35);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.2);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
 }
 
 /* LEFT */
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* HAMBURGER */
 .menu-btn {
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 6px;
-  padding: 4px 10px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
   cursor: pointer;
+  color: #fff;
+  transition: all var(--transition-base);
+}
+
+.menu-btn:hover {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: var(--primary-light);
 }
 
 /* TITLE */
 .title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   white-space: nowrap;
   color: #ffffff;
-  letter-spacing: 0.4px;
+  letter-spacing: -0.2px;
 }
 
 /* RIGHT */
 .nav-right {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
-.nav-right button {
+/* ACTION BUTTONS */
+.nav-action-btn {
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
-  padding: 5px 12px;
-  border-radius: 6px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
   border: none;
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
   cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0.3px;
 }
 
-.nav-right button:hover {
-  background: rgba(255, 255, 255, 0.28);
+.add-btn {
+  background: var(--gradient-success);
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+}
+
+.add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+}
+
+.logout-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #ffffff;
 }
 
 /* DESKTOP */
@@ -70,15 +95,25 @@
     display: none;
   }
 }
-/* MOBILE FIX: reduce button spacing */
+
+/* MOBILE */
 @media (max-width: 768px) {
-  .nav-right {
-    gap: 4px; /* was 8px */
+  .navbar {
+    height: 56px;
+    padding: 0 12px;
   }
 
-  .nav-right button {
+  .title {
+    font-size: 15px;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .nav-action-btn {
     font-size: 12px;
-    padding: 4px 8px;
+    padding: 5px 10px;
     white-space: nowrap;
   }
 }

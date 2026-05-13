@@ -157,30 +157,16 @@
     </div>
   </div>
 
-  <!-- MEMBER SECTION -->
+  <!-- ============================== -->
+  <!--       MEMBER SECTION           -->
+  <!-- (Auto-loaded from localStorage) -->
+  <!-- ============================== -->
 
-  <div *ngIf="isMember" class="member-search">
-    <input class="form-control"
-           placeholder="Flat Number"
-           [(ngModel)]="memberFlat">
-
-    <select class="form-control mt-2"
-            [(ngModel)]="memberWing">
-      <option value="">Select Wing</option>
-      <option *ngFor="let w of wings" [value]="w">{{ w }}</option>
-    </select>
-
-    <button class="btn btn-primary mt-2"
-            (click)="viewMyMaintenance()">
-      View My Maintenance
-    </button>
-  </div>
-
-  <!-- MEMBER DETAILS -->
-  <div *ngIf="memberDetails" class="member-grid mt-3">
+  <!-- MEMBER DETAILS (auto-loaded) -->
+  <div *ngIf="isMember && memberDetails" class="member-grid mt-3">
 
     <div class="card member-card">
-      <h5>Flat Owner Details</h5>
+      <h5>👤 Your Flat Details</h5>
       <p><b>Name:</b> {{ memberDetails.name }}</p>
       <p><b>Email:</b> {{ memberDetails.email }}</p>
       <p><b>Contact:</b> {{ memberDetails.mobile }}</p>
@@ -226,7 +212,7 @@
 
   </div>
 
-  <!-- MEMBER HISTORY -->
+  <!-- MEMBER HISTORY TABLE -->
   <div *ngIf="showMemberTable && isMember" class="table-scroll mt-3">
     <table class="table table-bordered">
       <thead>

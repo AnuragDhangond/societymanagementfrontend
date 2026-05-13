@@ -39,6 +39,14 @@ export class LoginComponent implements OnInit {
 
       localStorage.setItem('userId', res.user.id);
 
+      // Store flat + wing for auto-fill on complaints/maintenance
+      if (res.user.flat) {
+        localStorage.setItem('flat', String(res.user.flat));
+      }
+      if (res.user.wing) {
+        localStorage.setItem('wing', res.user.wing);
+      }
+
       this.router.navigate(['/members']);
     },
     err => {

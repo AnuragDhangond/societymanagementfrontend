@@ -9,13 +9,12 @@
   <div class="nav-right">
   <button
     *ngIf="isMembersPage() && isAdmin"
-    class="btn btn-success me-2"
+    class="nav-action-btn add-btn"
     (click)="triggerAddMember()">
-   Add
+   + Add
   </button>
 
-
-    <button class="btn btn-danger" routerLink="/login">
+    <button class="nav-action-btn logout-btn" routerLink="/login">
       Logout
     </button>
   </div>

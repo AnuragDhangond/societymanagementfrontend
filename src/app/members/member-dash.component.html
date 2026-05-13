@@ -1,4 +1,13 @@
-<div class="main-content">
+<div class="page-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-icon">👥</div>
+    <div>
+      <h2>Society Members</h2>
+      <p>View and manage all society members</p>
+    </div>
+  </div>
 
   <div class="table-wrapper">
     <div class="table-container">
@@ -27,15 +36,15 @@
 
             <td *ngIf="isAdmin">
               <button
-                class="btn btn-info"
+                class="btn btn-edit"
                 (click)="onEditMem(data)">
-                Edit
+                ✏️ Edit
               </button>&nbsp;
 
               <button
-                class="btn btn-danger"
+                class="btn btn-delete"
                 (click)="deleteMem(data._id)">
-                Delete
+                🗑️ Delete
               </button>
             </td>
           </tr>

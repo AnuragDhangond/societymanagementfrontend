@@ -12,14 +12,9 @@ export class ComplaintsComponent implements OnInit {
   isAdmin = false;
   isMember = false;
 
-  // =========================
-  // MEMBER VERIFY INPUT
-  // =========================
-  flat = '';
-  wing = '';
+  // MEMBER STATE — auto-filled from localStorage
   isVerified = false;
 
-  //  MEMBER DETAILS (KEEP)
   memberDetails: {
     name: string;
     email: string;
@@ -28,26 +23,19 @@ export class ComplaintsComponent implements OnInit {
     wing: string;
   } | null = null;
 
-  // =========================
   // COMPLAINT FORM
-  // =========================
   complaint = {
     category: '',
     subject: '',
     description: ''
   };
 
-  // =========================
   // DATA FROM BACKEND
-  // =========================
   myComplaints: any[] = [];
   allComplaints: any[] = [];
 
-  // =========================
   // MASTER DATA
-  // =========================
   membersList: any[] = [];
-  wings = ['Wing A', 'Wing B'];
   categories = ['Water', 'Electricity', 'Parking', 'Lift', 'Other'];
 
   constructor(private api: ApiService) {}
@@ -57,12 +45,17 @@ export class ComplaintsComponent implements OnInit {
     this.isAdmin = role === 'admin';
     this.isMember = role === 'member';
 
-    //  REQUIRED FOR FLAT VERIFY
+    // Load members list
     this.loadMembers();
 
-    //  ADMIN: LOAD ALL COMPLAINTS
+    // ADMIN: load all complaints
     if (this.isAdmin) {
       this.loadAllComplaints();
+    }
+
+    // MEMBER: auto-verify from localStorage
+    if (this.isMember) {
+      this.autoVerifyFlat();
     }
   }
 
@@ -73,39 +66,53 @@ export class ComplaintsComponent implements OnInit {
     this.api.getMember().subscribe({
       next: (res: any) => {
         this.membersList = res;
+
+        // Re-try auto-verify after members are loaded
+        if (this.isMember && !this.isVerified) {
+          this.autoVerifyFlat();
+        }
       },
       error: () => alert('Failed to load members')
     });
   }
 
   // =========================
-  // VERIFY FLAT (FRONTEND)
+  // AUTO VERIFY (from localStorage)
   // =========================
-  verifyFlat() {
+  autoVerifyFlat() {
+    const flat = localStorage.getItem('flat');
+    const wing = localStorage.getItem('wing');
+
+    if (!flat || !wing || flat === 'null' || wing === 'null' || flat === 'undefined' || wing === 'undefined') return;
+
     const member = this.membersList.find(
-      m => m.address === this.flat && m.services === this.wing
+      m => m.address === flat && m.services === wing
     );
 
-    if (!member) {
-      alert('Flat not registered. Contact administrator.');
-      this.isVerified = false;
-      this.memberDetails = null;
-      return;
+    if (member) {
+      this.memberDetails = {
+        name: member.name,
+        email: member.email,
+        mobile: member.mobile,
+        flat: member.address,
+        wing: member.services
+      };
+      this.isVerified = true;
+      this.loadMyComplaints();
+    } else {
+      // Flat exists in user account but not in members collection yet
+      // Use the stored user info directly
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.memberDetails = {
+        name: user.name || '',
+        email: user.email || '',
+        mobile: user.mobile || '',
+        flat: flat,
+        wing: wing
+      };
+      this.isVerified = true;
+      this.loadMyComplaints();
     }
-
-    // AUTOFILL DETAILS
-    this.memberDetails = {
-      name: member.name,
-      email: member.email,
-      mobile: member.mobile,
-      flat: member.address,
-      wing: member.services
-    };
-
-    this.isVerified = true;
-
-    // LOAD MEMBER COMPLAINTS
-    this.loadMyComplaints();
   }
 
   // =========================

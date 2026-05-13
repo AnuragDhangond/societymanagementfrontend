@@ -28,7 +28,9 @@ export class SignupComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      flat: [''],
+      wing: ['']
     });
   }
 
@@ -38,26 +40,44 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    const { role, adminCode, ...rest } = this.signupForm.value;
+    const { role, adminCode, flat, wing, ...rest } = this.signupForm.value;
 
-    //  Admin validation
+    // Admin validation
     if (role === 'admin') {
       if (!adminCode) {
         alert("Admin Signup Code is required!");
         return;
       }
-
       if (adminCode !== this.ADMIN_SIGNUP_CODE) {
         alert("Invalid Admin Signup Code!");
         return;
       }
     }
 
-    // Payload (role included)
-    const signupData = {
+    // Member validation — flat + wing required
+    if (role === 'member') {
+      const flatStr = String(flat).trim();
+      if (!flatStr || !/^\d{3}$/.test(flatStr)) {
+        alert("Flat number must be exactly 3 digits (e.g. 101, 202)");
+        return;
+      }
+      if (!wing) {
+        alert("Please select a Wing");
+        return;
+      }
+    }
+
+    // Build payload
+    const signupData: any = {
       ...rest,
       role
     };
+
+    // Only include flat/wing for members
+    if (role === 'member') {
+      signupData.flat = flat;
+      signupData.wing = wing;
+    }
 
     this._http.post<any>(
       `${environment.apiUrl}/signup/register`,

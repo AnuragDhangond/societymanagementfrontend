@@ -5,19 +5,44 @@
 >
 
   <div class="sidebar-header">
-    Panel
+    <div class="sidebar-brand-icon">🏠</div>
+    <span class="sidebar-brand-text">Sai Balaji</span>
   </div>
 
   <ul class="menu">
-    <li routerLink="/members" routerLinkActive="active">Members</li>
-    <li routerLink="/maintenance" routerLinkActive="active">Maintenance</li>
-    <li routerLink="/complaints" routerLinkActive="active">Complaints</li>
-    <li routerLink="/expenses" routerLinkActive="active">Expenses</li>
-    <li routerLink="/notice" routerLinkActive="active">Notices</li>
-    <li *ngIf="userRole === 'admin'" routerLink="/accounts" routerLinkActive="active">Account</li>
-    <li routerLink="/election" routerLinkActive="active">Election</li>
+    <li routerLink="/members" routerLinkActive="active">
+      <span class="menu-icon">👥</span>
+      <span class="menu-text">Members</span>
+    </li>
+    <li routerLink="/maintenance" routerLinkActive="active">
+      <span class="menu-icon">🔧</span>
+      <span class="menu-text">Maintenance</span>
+    </li>
+    <li routerLink="/complaints" routerLinkActive="active">
+      <span class="menu-icon">📋</span>
+      <span class="menu-text">Complaints</span>
+    </li>
+    <li routerLink="/expenses" routerLinkActive="active">
+      <span class="menu-icon">💰</span>
+      <span class="menu-text">Expenses</span>
+    </li>
+    <li routerLink="/notice" routerLinkActive="active">
+      <span class="menu-icon">📢</span>
+      <span class="menu-text">Notices</span>
+    </li>
+    <li *ngIf="userRole === 'admin'" routerLink="/accounts" routerLinkActive="active">
+      <span class="menu-icon">📊</span>
+      <span class="menu-text">Accounts</span>
+    </li>
+    <li routerLink="/election" routerLinkActive="active">
+      <span class="menu-icon">🗳️</span>
+      <span class="menu-text">Election</span>
+    </li>
 
-    <li class="logout" (click)="logout()">Logout</li>
+    <li class="logout" (click)="logout()">
+      <span class="menu-icon">🚪</span>
+      <span class="menu-text">Logout</span>
+    </li>
   </ul>
 
 </div>

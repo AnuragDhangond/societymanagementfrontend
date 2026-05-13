@@ -2,25 +2,26 @@
 
   <!-- ================= ADMIN SUMMARY CARDS ================= -->
   <div class="cards" *ngIf="role === 'admin'">
-    <div class="card">
-      <p>Total Maintenance Collection</p>
+    <div class="card card-income">
+      <p>💰 Total Maintenance Collection</p>
       <h3>₹ {{ totalCollection }}</h3>
     </div>
 
-    <div class="card">
-      <p>Total Expenses</p>
+    <div class="card card-expense">
+      <p>📤 Total Expenses</p>
       <h3>₹ {{ totalExpenses }}</h3>
     </div>
 
-    <div class="card">
-      <p>Remaining Balance</p>
+    <div class="card card-balance">
+      <p>📊 Remaining Balance</p>
       <h3>₹ {{ remainingAmount }}</h3>
     </div>
   </div>
 
   <!-- ================= HEADER ================= -->
   <div class="header">
-    <h2>Society Expenses </h2>
+    <div class="page-header-icon">💰</div>
+    <h2>Society Expenses</h2>
 
     <button
       *ngIf="role === 'admin'"
@@ -53,8 +54,8 @@
           <td>{{ exp.description }}</td>
 
           <td *ngIf="role === 'admin'">
-            <button class="edit" (click)="openEditForm(exp)">Edit</button>
-            <button class="delete" (click)="deleteExpense(exp)">Delete</button>
+            <button class="edit" (click)="openEditForm(exp)">✏️ Edit</button>
+            <button class="delete" (click)="deleteExpense(exp)">🗑️ Delete</button>
           </td>
         </tr>
       </tbody>
@@ -71,8 +72,8 @@
       <p><b>Description:</b> {{ exp.description }}</p>
 
       <div class="actions" *ngIf="role === 'admin'">
-        <button class="edit" (click)="openEditForm(exp)">Edit</button>
-        <button class="delete" (click)="deleteExpense(exp)">Delete</button>
+        <button class="edit" (click)="openEditForm(exp)">✏️ Edit</button>
+        <button class="delete" (click)="deleteExpense(exp)">🗑️ Delete</button>
       </div>
     </div>
   </div>
@@ -83,7 +84,7 @@
 <div class="modal-backdrop" *ngIf="showForm">
   <div class="modal-box">
 
-    <h3>{{ isEditMode ? 'Edit Expense' : 'Add Expense' }}</h3>
+    <h3>{{ isEditMode ? '✏️ Edit Expense' : '➕ Add Expense' }}</h3>
 
     <form (ngSubmit)="isEditMode ? updateExpense() : saveExpense()">
 

@@ -1,21 +1,49 @@
+/* ===== MAINTENANCE WRAPPER ===== */
 .maintenance-wrapper {
-  background: #fff;
+  background: var(--bg-card);
   padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
+  overflow: hidden;
+  animation: fadeInUp 0.4s ease;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 .maintenance-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  gap: 16px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #ede9fe 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid #c7d2fe;
 }
 
-/* ADD FORM */
+.maintenance-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.maintenance-header .btn-primary {
+  font-size: 14px;
+  padding: 10px 20px;
+}
+
+/* ===== ADD FORM ===== */
 .add-form {
   margin-bottom: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  border-radius: var(--radius-md);
+  border: 1px solid #c7d2fe;
 }
 
 .form-row {
@@ -24,256 +52,18 @@
   margin-bottom: 12px;
 }
 
-.form-actions {
-  display: flex;
-  gap: 10px;
-}
-
-/* TOTAL */
-.total-box {
-  background: linear-gradient(135deg, #0d6efd, #6610f2);
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-}
-
-.total-box h3 {
-  margin: 0;
-}
-
-/* TABLE */
-.click-row {
-  cursor: pointer;
-}
-
-.click-row:hover {
-  background: #f1f5ff;
-}
-
-/* HISTORY */
-.history-card {
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 10px;
-  background: #f8f9fa;
-}
-
-.history-card ul {
-  padding-left: 18px;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .maintenance-header {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .form-row {
-    flex-direction: column;
-  }
-}
-.table-scroll {
-  width: 100%;
-  overflow-x: auto;
-}
-
-@media (max-width: 768px) {
-  table {
-    min-width: 600px; /* force scroll */
-  }
-}
-/* HISTORY OVERLAY */
-.history-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 4000;
-}
-
-/* HISTORY CARD */
-.history-modal {
+.form-control {
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #e2e8f0;
   background: #fff;
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.history-modal ul {
-  padding-left: 18px;
-  margin-bottom: 16px;
-}
-/* =========================
-   FIXED TOP + SCROLL TABLE
-========================= */
-
-/* Make wrapper full height */
-.maintenance-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 56px); /* navbar height */
-  overflow: hidden;
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: #fefeff;
 }
 
-/* Keep header, form, card fixed */
-.maintenance-header,
-.add-form,
-.total-box {
-  flex-shrink: 0;
-}
-
-.table-scroll {
-  flex: 1;                  
-  overflow-y: auto;         
-  overflow-x: auto;         
-  margin-top: 12px;
-  padding-bottom: 8px;
-}
-
-/* Keep table header visible */
-.table-scroll table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-/* Mobile horizontal scroll */
-@media (max-width: 768px) {
-  .table-scroll table {
-    min-width: 650px; /* forces side scroll */
-  }
-}
-/* =========================
-   MEMBER VIEW FIX
-========================= */
-
-.member-card {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-top: 16px;
-  margin-bottom: 12px; 
-  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-}
-
-/* Owner details spacing */
-.member-card p {
-  margin: 4px 0;
-  font-size: 14px;
-}
-
-/* Add Maintenance button */
-.member-card .btn-success {
-  margin-top: 12px;
-  width: 100%;
-  padding: 10px;
-  font-weight: 600;
-}
-
-/* =========================
-   MEMBER TABLE FIX
-========================= */
-
-.member-table-wrapper {
-  margin-top: 10px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* Reduce table row height */
-.table td, .table th {
-  padding: 10px;
-  vertical-align: middle;
-}
-
-/* =========================
-   MOBILE FIX
-========================= */
-
-@media (max-width: 768px) {
-
-  .maintenance-wrapper {
-    padding: 16px;
-    height: auto; 
-  }
-
-  .member-card {
-    padding: 14px;
-  }
-
-  .member-card h5 {
-    font-size: 16px;
-  }
-
-  .table-scroll {
-    margin-top: 8px;
-  }
-}
-/* ===============================
-   MEMBER GRID (2 COLUMN)
-================================ */
-.member-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-/* Cards */
-.member-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Text spacing */
-.member-card p {
-  margin: 6px 0;
-  font-size: 14px;
-}
-
-/* Inputs */
-.member-card .form-control {
-  border-radius: 8px;
-  padding: 10px;
-}
-
-/* ===============================
-   TABLE SCROLL FIX
-================================ */
-.table-scroll {
-  max-height: 350px;
-  overflow-y: auto;
-  overflow-x: auto;
-  margin-top: 16px;
-}
-
-.table-scroll table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-/* ===============================
-   MOBILE VIEW
-================================ */
-@media (max-width: 768px) {
-
-  .member-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .table-scroll table {
-    min-width: 600px;
-  }
-}
 .action-buttons {
   display: flex;
   gap: 12px;
@@ -283,33 +73,8 @@
 .action-buttons .btn {
   min-width: 100px;
 }
-/* ===== RECORD ROW ===== */
-.record-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  background: #f8f9fa;
-}
 
-/* Left text */
-.record-info {
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* Right buttons */
-.record-actions {
-  display: flex;
-  gap: 8px;
-}
-
-/* Buttons consistency */
-.record-actions .btn {
-  min-width: 60px;
-}
+/* ===== SUMMARY ROW ===== */
 .summary-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -318,18 +83,75 @@
 }
 
 .summary-box {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: var(--gradient-primary);
   color: #fff;
-  padding: 16px;
-  border-radius: 12px;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-primary);
+  transition: transform var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-box::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.summary-box:hover {
+  transform: translateY(-3px);
+}
+
+.summary-box span {
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-box h3, .summary-box h4 {
+  color: #fff;
+  margin-top: 6px;
 }
 
 .summary-box select {
   width: 100%;
   margin: 8px 0;
-  padding: 6px;
+  padding: 8px;
   border-radius: 6px;
   border: none;
+  font-size: 13px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.summary-box select option {
+  color: var(--text-primary);
+  background: #fff;
+}
+
+/* ===== TABLE ===== */
+.table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 12px;
+  padding-bottom: 8px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid #e2e8f0;
+}
+
+.table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .admin-table {
@@ -340,28 +162,177 @@
 .table-bordered {
   margin-bottom: 0;
 }
-.summary-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+
+.table td, .table th {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+.table thead th {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff) !important;
+  color: var(--primary-dark) !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.5), rgba(224, 231, 255, 0.3));
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(248, 250, 252, 0.8);
+}
+
+/* ===== HISTORY OVERLAY ===== */
+.history-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4000;
+  animation: fadeIn 0.2s ease;
+}
+
+.history-modal {
+  background: var(--bg-card);
+  width: 90%;
+  max-width: 420px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #e2e8f0;
+}
+
+.history-modal h4 {
+  color: var(--text-primary);
+  font-weight: 700;
   margin-bottom: 16px;
 }
 
-/* Mobile */
+.history-modal ul {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+/* ===== RECORD ROW ===== */
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  border: 1px solid #e2e8f0;
+  transition: all var(--transition-fast);
+}
+
+.record-row:hover {
+  background: #e0e7ff;
+  border-color: #c7d2fe;
+}
+
+.record-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.record-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.record-actions .btn {
+  min-width: 60px;
+  font-size: 12px;
+}
+
+/* ===== MEMBER VIEW ===== */
+.member-search {
+  max-width: 400px;
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.member-card {
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid #c7d2fe;
+}
+
+.member-card h5 {
+  color: var(--primary-dark);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.member-card p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.member-card .form-control {
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+/* ===== MOBILE ===== */
 @media (max-width: 768px) {
+  .maintenance-wrapper {
+    padding: 16px;
+    height: auto;
+  }
+
+  .maintenance-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
   .summary-row {
     grid-template-columns: 1fr;
   }
-}
 
-.summary-box {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: white;
-  padding: 16px;
-  border-radius: 12px;
-}
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
 
-.summary-box select {
-  width: 100%;
-  margin-top: 8px;
+  .table-scroll table {
+    min-width: 650px;
+  }
+
+  .member-card {
+    padding: 14px;
+  }
+
+  .table-scroll {
+    margin-top: 8px;
+  }
 }

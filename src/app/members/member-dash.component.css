@@ -1,67 +1,167 @@
-/* PAGE RESET */
-body {
+/* =========================
+   MEMBERS PAGE — LIGHT THEME
+========================= */
+
+.page-wrapper {
+  animation: fadeInUp 0.4s ease;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #ede9fe 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid #c7d2fe;
+}
+
+.page-header-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
+  flex-shrink: 0;
+}
+
+.page-header h2 {
   margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.page-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* ===== TABLE WRAPPER ===== */
+.table-wrapper {
   padding: 0;
 }
 
-/* TABLE WRAPPER */
-.table-wrapper {
-  padding: 15px;
-}
-
-/* TABLE SCROLL AREA */
 .table-container {
   overflow-x: auto;
   overflow-y: auto;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 220px);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid #e2e8f0;
 }
 
-/* TABLE */
+/* ===== TABLE ===== */
 .table {
   width: 100%;
-  min-width: 800px; /* allows horizontal scroll on mobile */
+  min-width: 800px;
   border-collapse: collapse;
+  margin: 0;
 }
 
-/* TABLE HEADER */
 .table thead th {
   position: sticky;
   top: 0;
-  background: #ffffff;
   z-index: 5;
-  font-size: 14px;
-  padding: 10px;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff) !important;
+  color: var(--primary-dark) !important;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 14px 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border: none !important;
 }
 
-/* TABLE BODY */
 .table tbody td {
   font-size: 14px;
-  padding: 10px;
+  padding: 14px 16px;
   vertical-align: middle;
+  color: var(--text-primary);
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.table tbody tr {
+  transition: all var(--transition-fast);
+}
+
+.table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.6), rgba(224, 231, 255, 0.4));
+}
+
+.table tbody tr:nth-child(even) {
+  background: rgba(241, 245, 249, 0.5);
+}
+
+.table tbody tr:nth-child(even):hover {
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.6), rgba(224, 231, 255, 0.4));
 }
 
 /* ACTION BUTTONS */
-.table button {
+.btn-edit {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border: 1px solid #c7d2fe;
+  color: var(--primary-dark);
   font-size: 12px;
-  padding: 4px 8px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
 }
 
-/* =====================
-   MOBILE FIX
-===================== */
-@media (max-width: 768px) {
+.btn-edit:hover {
+  background: var(--gradient-primary);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-primary);
+}
 
-  .table-wrapper {
-    padding: 10px;
+.btn-delete {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border: 1px solid #fecaca;
+  color: var(--danger-dark);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.btn-delete:hover {
+  background: var(--gradient-danger);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px;
+  }
+
+  .table-container {
+    max-height: none;
+    border-radius: var(--radius-sm);
   }
 
   .table thead th,
   .table tbody td {
     font-size: 12px;
-    padding: 8px;
-  }
-
-  .table-container {
-    max-height: none;
+    padding: 10px 12px;
   }
 }

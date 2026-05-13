@@ -1,56 +1,62 @@
 <div class="login-wrapper">
-  <!-- <div class="row">
-    <div class="col-md-6"> -->
-      <div class="card">
-        <div class="text-center">
-          <h1>Sai Balaji Society Login Portal</h1>
-          <h5>You can login here!</h5>
+
+  <!-- Floating Decorative Shapes -->
+  <div class="floating-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <div class="card">
+
+    <!-- Branding -->
+    <div class="brand-header">
+      <div class="brand-icon">🏠</div>
+      <h1>Sai Balaji Society</h1>
+      <p>Login to your portal</p>
+    </div>
+
+    <!-- Reactive Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+
+      <div class="input-group-custom">
+        <label class="form-label">Email Address</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">📧</span>
+          <input formControlName="email"
+                 type="email"
+                 class="form-control"
+                 id="loginEmail"
+                 placeholder="you@example.com">
         </div>
-
-        <!-- (1) Reactive Form Binding -->
-        <!-- [formGroup] → Angular Reactive Forms -->
-        <!-- (ngSubmit) → Angular Event Binding -->
-        <form [formGroup]="loginForm" (ngSubmit)="logIn()">
-
-          <div class="mb-3">
-            <label class="form-label">Email address</label>
-
-            <!-- (2) FormControl Binding -->
-            <!-- formControlName → Angular Reactive Forms -->
-            <input formControlName="email"
-                   type="email"
-                   class="form-control"
-                   id="exampleInputEmail1"
-                   placeholder="Email address">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-
-            <!-- formControlName → Angular Reactive Forms -->
-            <input formControlName="password"
-                   type="password"
-                   class="form-control"
-                   id="exampleInputPassword1">
-          </div>
-
-          <!-- Normal HTML button but used inside Angular form -->
-          <button type="submit" class="btn btn-primary">Login</button>
-
-        </form>
-
-        <!-- (3) Angular Routing -->
-        <!-- routerLink → Angular Router Navigation -->
-        <div class="d-flex justify-content-between mt-3">
-          <a style="color: blue; cursor: pointer;" routerLink="/signup">
-            New User? Sign up
-          </a>
-          <a style="color: blue; cursor: pointer;" routerLink="/forgot-password">
-            Forgot Password?
-          </a>
-        </div>
-
       </div>
-    <!-- </div>
-  </div> -->
+
+      <div class="input-group-custom">
+        <label class="form-label">Password</label>
+        <div class="input-icon-wrap">
+          <span class="input-icon">🔒</span>
+          <input formControlName="password"
+                 type="password"
+                 class="form-control"
+                 id="loginPassword"
+                 placeholder="Enter your password">
+        </div>
+      </div>
+
+      <button type="submit" id="loginBtn" class="btn-submit">Login</button>
+
+    </form>
+
+    <!-- Links -->
+    <div class="auth-links">
+      <a routerLink="/signup">
+        New User? Sign up
+      </a>
+      <a routerLink="/forgot-password">
+        Forgot Password?
+      </a>
+    </div>
+
+  </div>
+
 </div>
