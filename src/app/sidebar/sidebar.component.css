@@ -22,9 +22,15 @@
 .sidebar-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   padding: 22px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .sidebar-brand-icon {
@@ -109,18 +115,100 @@
   color: #fca5a5 !important;
 }
 
+/* ===== CLOSE BUTTON & BACKDROP ===== */
+.close-btn-mobile {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
   .sidebar {
+    width: 240px;
     transform: translateX(-100%);
-    transition: transform 0.3s var(--transition-smooth);
-    top: 56px;
-    height: calc(100vh - 56px);
-    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    top: 0;
+    height: 100vh;
+    pointer-events: auto;
+    z-index: 1001;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .sidebar.open {
+  :host(.open) .sidebar {
     transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  :host(.open) .sidebar-backdrop {
+    opacity: 1;
     pointer-events: auto;
+  }
+
+  /* Compact header on mobile */
+  .sidebar-header {
+    padding: 16px 14px;
+  }
+
+  .sidebar-brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  .sidebar-brand-text {
+    font-size: 16px;
+  }
+
+  /* Compact menu on mobile */
+  .menu {
+    padding: 8px 6px;
+  }
+
+  .menu li {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .menu-icon {
+    font-size: 16px;
+  }
+
+  .close-btn-mobile {
+    display: block;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+  }
+
+  .close-btn-mobile:hover {
+    opacity: 1;
   }
 }

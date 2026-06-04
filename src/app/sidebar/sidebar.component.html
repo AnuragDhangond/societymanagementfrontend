@@ -1,12 +1,14 @@
 <div 
   class="sidebar"
-  [class.open]="isOpen"
   *ngIf="isLoggedIn"
 >
 
   <div class="sidebar-header">
-    <div class="sidebar-brand-icon">🏠</div>
-    <span class="sidebar-brand-text">Sai Balaji</span>
+    <div class="sidebar-header-brand">
+      <div class="sidebar-brand-icon">🏠</div>
+      <span class="sidebar-brand-text">Sai Balaji</span>
+    </div>
+    <button class="close-btn-mobile" (click)="closeSidebar()">✕</button>
   </div>
 
   <ul class="menu">
@@ -46,3 +48,10 @@
   </ul>
 
 </div>
+
+<!-- Backdrop Overlay for Mobile -->
+<div 
+  class="sidebar-backdrop"
+  *ngIf="isLoggedIn"
+  (click)="closeSidebar()"
+></div>

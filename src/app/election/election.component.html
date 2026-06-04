@@ -1,23 +1,151 @@
-<div class="expenses-container">
-
+<div class="election-container">
   <!-- Page Header -->
   <div class="page-header">
     <div class="page-header-icon">🗳️</div>
     <div>
       <h2>Society Election</h2>
-      <p>Election overview and results</p>
+      <p>Election dates, nomination process, and candidate list</p>
     </div>
   </div>
 
-  <div class="cards">
-    <div class="card">
-      <p>👥 Total Voters</p>
-      <h3>76</h3>
+  <!-- Election Timeline Cards -->
+  <div class="cards" *ngIf="electionDates">
+    <div class="card timeline-card">
+      <p>📅 Nomination Starts</p>
+      <h3>{{ electionDates.nominationStart | date:'mediumDate' }}</h3>
     </div>
-    <div class="card">
-      <p>🏛️ Total Candidates to come on committee</p>
-      <h3>11</h3>
+    <div class="card timeline-card">
+      <p>⏳ Nomination Ends</p>
+      <h3>{{ electionDates.nominationEnd | date:'mediumDate' }}</h3>
+    </div>
+    <div class="card timeline-card highlight">
+      <p>🗳️ Election Date</p>
+      <h3>{{ electionDates.electionDate | date:'mediumDate' }}</h3>
     </div>
   </div>
 
+  <!-- ================= MEMBER VIEW ================= -->
+  <div class="main-content-grid" *ngIf="!isAdmin">
+    <!-- Left Column: Application Form -->
+    <div class="form-section glass-panel">
+      <h3>Submit Your Nomination</h3>
+      <p class="subtitle">Show interest to become part of the 11-member committee.</p>
+      
+      <div *ngIf="submitSuccess" class="success-alert">
+        ✅ Your nomination has been submitted and is pending admin approval.
+      </div>
+      <div *ngIf="submitError" class="error-alert" style="padding: 12px; background: #fee2e2; color: #b91c1c; border-radius: 8px; margin-bottom: 20px;">
+        ❌ {{ submitError }}
+      </div>
+
+      <form [formGroup]="applicationForm" (ngSubmit)="onSubmitApplication()">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label>Applying As:</label>
+          <div style="padding: 10px; background: #f1f5f9; border-radius: 8px; color: #334155;">
+            <strong>{{ userName || 'Guest' }}</strong> (Flat: {{ userFlat || 'N/A' }})
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Desired Position</label>
+          <select id="role" formControlName="role" class="form-control">
+            <option value="" disabled selected>Select a role...</option>
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="applicationForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'Submitting...' : 'Submit Nomination' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Right Column: Approved Candidates -->
+    <div class="list-section glass-panel">
+      <h3>Approved Candidates</h3>
+      <p class="subtitle">Members officially running for the committee.</p>
+
+      <div class="candidates-grid">
+        <div class="candidate-card" *ngFor="let candidate of approvedCandidates">
+          <div class="avatar">{{ candidate.name.charAt(0) }}</div>
+          <div class="details">
+            <h4>{{ candidate.name }}</h4>
+            <span class="flat-badge">{{ candidate.flatNo }} {{ candidate.wing ? ' - Wing ' + candidate.wing : '' }}</span>
+            <span class="role-badge">{{ candidate.role }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="approvedCandidates.length === 0" class="no-data">
+        <p>No candidates have been approved yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ADMIN VIEW ================= -->
+  <div class="admin-panel glass-panel" *ngIf="isAdmin" style="margin-top: 24px;">
+    <h3>🛠️ Candidate Applications (Admin)</h3>
+    <p class="subtitle">Review and approve member nominations for the committee.</p>
+    
+    <!-- Desktop Table View (hidden on mobile) -->
+    <table class="admin-table desktop-only">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Flat/Wing</th>
+          <th>Applied Role</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of allCandidates">
+          <td><strong>{{ c.name }}</strong></td>
+          <td>{{ c.flatNo }} {{ c.wing ? ' - ' + c.wing : '' }}</td>
+          <td>{{ c.role }}</td>
+          <td><span [class]="'status-badge ' + c.status.toLowerCase()">{{ c.status }}</span></td>
+          <td>
+            <button *ngIf="c.status === 'PENDING'" (click)="approveCandidate(c._id)" class="btn-approve">
+              Approve
+            </button>
+            <span *ngIf="c.status === 'APPROVED'">✅ Approved</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mobile Cards View (hidden on desktop) -->
+    <div class="mobile-only-cards" *ngIf="allCandidates.length > 0">
+      <div class="candidate-app-card" *ngFor="let c of allCandidates">
+        
+        <div class="app-card-header">
+          <div class="app-avatar">{{ c.name.charAt(0) }}</div>
+          <div class="app-info">
+            <h4>{{ c.name }}</h4>
+            <div class="app-badges">
+              <span class="flat-badge">{{ c.flatNo }} {{ c.wing ? ' - Wing ' + c.wing : '' }}</span>
+              <span class="role-badge">{{ c.role }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-card-footer">
+          <div class="app-status">
+            <span [class]="'status-badge ' + c.status.toLowerCase()">{{ c.status }}</span>
+          </div>
+          <div class="app-action">
+            <button *ngIf="c.status === 'PENDING'" (click)="approveCandidate(c._id)" class="btn-approve">
+              Approve
+            </button>
+            <span *ngIf="c.status === 'APPROVED'">✅ Approved</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <div *ngIf="allCandidates.length === 0" class="no-data">
+      <p>No one has applied yet.</p>
+    </div>
+  </div>
 </div>

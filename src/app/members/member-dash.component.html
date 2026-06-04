@@ -12,7 +12,8 @@
   <div class="table-wrapper">
     <div class="table-container">
 
-      <table class="table">
+      <!-- Desktop View Table (hidden on mobile) -->
+      <table class="table desktop-only">
         <thead>
           <tr>
             <th>ID</th>
@@ -50,6 +51,51 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- Mobile View Cards (hidden on desktop) -->
+      <div class="mobile-only-cards">
+        <div class="member-card" *ngFor="let data of allMemberData; let i = index">
+          
+          <div class="card-header-flex">
+            <div class="avatar-circle">
+              {{ (data.name ? data.name.substring(0, 1) : '') | uppercase }}
+            </div>
+            <div class="member-main-info">
+              <h4 class="member-name">{{ data.name }}</h4>
+              <div class="badge-row">
+                <span class="badge badge-flat">Flat {{ data.address }}</span>
+                <span class="badge badge-wing">{{ data.services }}</span>
+              </div>
+            </div>
+            <div class="member-index">#{{ i + 1 }}</div>
+          </div>
+          
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="detail-icon">📧</span>
+              <span class="detail-text">{{ data.email }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">📞</span>
+              <span class="detail-text">{{ data.mobile }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions" *ngIf="isAdmin">
+            <button
+              class="btn btn-edit-mobile"
+              (click)="onEditMem(data)">
+              ✏️ Edit
+            </button>
+            <button
+              class="btn btn-delete-mobile"
+              (click)="deleteMem(data._id)">
+              🗑️ Delete
+            </button>
+          </div>
+
+        </div>
+      </div>
 
     </div>
   </div>

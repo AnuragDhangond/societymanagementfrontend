@@ -45,19 +45,18 @@ app-sidebar {
   /* Sidebar under navbar */
   app-sidebar {
     position: fixed;
-    top: 56px;
+    top: 0;
     left: 0;
-    height: calc(100vh - 56px);
-    width: 250px;
-
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    height: 100vh;
+    width: 100%;
     z-index: 2000;
     pointer-events: none;
+
+    transform: none;
+    transition: none;
   }
 
   app-sidebar.open {
-    transform: translateX(0);
     pointer-events: auto;
   }
 

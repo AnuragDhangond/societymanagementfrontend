@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { UiService } from '../shared/ui.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,6 +27,17 @@ export class SidebarComponent implements OnInit {
     this.ui.sidebarToggle$.subscribe(() => {
       this.isOpen = !this.isOpen;
     });
+
+    // Automatically close sidebar when clicking a tab/route change
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.isOpen = false;
+    });
+  }
+
+  closeSidebar() {
+    this.isOpen = false;
   }
 
   logout() {

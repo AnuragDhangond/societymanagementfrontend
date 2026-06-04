@@ -138,4 +138,26 @@ export class ApiService {
       `${this.baseURL}/maintenance/summary/yearly?year=${year}&wing=${encodeURIComponent(wing)}`
     );
   }
+
+  // ================= ELECTION =================
+
+  getElectionDates() {
+    return this.http.get<any>(`${this.baseURL}/election/dates`);
+  }
+
+  getApprovedCandidates() {
+    return this.http.get<any[]>(`${this.baseURL}/election/candidates/approved`);
+  }
+
+  getAllCandidates() {
+    return this.http.get<any[]>(`${this.baseURL}/election/candidates`);
+  }
+
+  applyForElection(data: { name: string; flatNo: string; wing: string; role: string }) {
+    return this.http.post<any>(`${this.baseURL}/election/apply`, data);
+  }
+
+  approveCandidate(id: string) {
+    return this.http.put<any>(`${this.baseURL}/election/approve/${id}`, {});
+  }
 }
